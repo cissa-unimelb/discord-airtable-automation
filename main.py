@@ -4,7 +4,6 @@ from api.controllers import controllers
 from flask import Flask
 from config import IS_PROD
 from dotenv import load_dotenv
-import discord
 import os
 
 if not IS_PROD:
@@ -20,4 +19,6 @@ print(list_webhooks(BASE_ID))
 
 app = Flask(__name__)
 app.register_blueprint(controllers)
-app.run(host='localhost', port=3000)
+
+if __name__ == '__main__':
+    app.run(host='localhost', port=3000)
