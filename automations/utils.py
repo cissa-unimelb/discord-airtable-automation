@@ -1,6 +1,8 @@
 from database import engine
 from sqlalchemy import text
 import requests
+import pytz
+from datetime import datetime
 
 
 def has_not_matched(webhook_id, record_id):
@@ -27,3 +29,10 @@ def add_matched(webhook_id, record_id):
 
 def send_message(url, message):
     requests.post(url, json={'content':message})
+
+
+def parse_time(time):
+    time = datetime.strptime(time, '%Y-%m-%dT%H:%M:%S.%fZ')
+    time = time.replace(tzinfo=pytz.utc)
+    time = time.astimezone(pytz.timezone('Australia/Melbourne'))
+    return time.strftime('%d/%m/%Y %H:%M:%S')
