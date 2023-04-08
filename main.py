@@ -13,4 +13,6 @@ TABLE_ID = os.getenv('TABLE_ID')
 
 app = Flask(__name__)
 app.register_blueprint(controllers)
-app.run(host='localhost', port=3000)
+
+if __name__ == '__main__':
+    app.run(host='localhost', port=3000)

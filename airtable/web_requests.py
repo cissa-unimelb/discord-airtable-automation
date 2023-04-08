@@ -90,7 +90,7 @@ def list_webhook_payloads(base_id, webhook_id, table_id):
     req = requests.get(url, headers={'Authorization': f'Bearer {TOKEN}'})
     resp = req.json()
 
-    while resp['mightHaveMore']:
+    while 'mightHaveMore' in resp and resp['mightHaveMore']:
         url = f'https://api.airtable.com/v0/bases/{base_id}/webhooks/{webhook_id}/payloads?cursor={resp["cursor"]}'
         req = requests.get(url, headers={'Authorization': f'Bearer {TOKEN}'})
         resp = req.json()
