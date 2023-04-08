@@ -1,4 +1,3 @@
-from config import IS_PROD
 import os
 import requests
 from airtable.types import *
@@ -67,8 +66,6 @@ def create_webhook(base_id, url, table_id, fields=None, includes=None):
 
     req = requests.post(api_url, headers={'Authorization': f'Bearer {TOKEN}'}, json=body)
     res = req.json()
-
-    print(res)
 
     with engine.connect() as conn:
         records = conn.execute(text(
