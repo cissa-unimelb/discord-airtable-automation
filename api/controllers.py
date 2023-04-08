@@ -1,11 +1,13 @@
+import os
+
 from flask import Blueprint, request
 from airtable.web_requests import list_webhook_payloads
 from database import engine
 from sqlalchemy import text
 
 controllers = Blueprint('controllers', __name__)
-BASE_ID = 'appq8cXX0yFGnGtpE'
-TABLE_ID = 'tbl7HmvrdL6AA6l8k'
+BASE_ID = os.getenv('BASE_ID')
+TABLE_ID = os.getenv('TABLE_ID')
 
 
 @controllers.route('/', methods=['GET'])
@@ -32,6 +34,6 @@ def notification():
         print(f"No webhook mapping exist with webhook {webhook_id}")
     else:
         payloads = list_webhook_payloads(BASE_ID, webhook_id, TABLE_ID)
-        exec(f'from automations.controllers import {func_name}\n{func_name}("{webhook_id}", payloads)')
+        exec(f'from automations.handlers import {func_name}\n{func_name}("{webhook_id}", payloads)')
 
     return 'null'

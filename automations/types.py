@@ -3,16 +3,9 @@ from typing import Callable
 from airtable.web_requests import create_webhook, delete_webhook
 from database import engine
 from sqlalchemy import text
-from config import IS_PROD
-from dotenv import load_dotenv
 import os
 
-
-if not IS_PROD:
-    load_dotenv()
-    HOST = os.getenv('NGROK_HOST')
-else:
-    HOST = os.getenv('PROD_HOST')
+HOST = os.getenv('HOST')
 
 
 @dataclass

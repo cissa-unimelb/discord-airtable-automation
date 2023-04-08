@@ -1,16 +1,11 @@
 from automations.types import Automation
 from automations.utils import *
 import os
-from config import IS_PROD
-
-if not IS_PROD:
-    from dotenv import load_dotenv
-    load_dotenv()
 
 PUB_URL = os.getenv('PUBLICITY_HOOK_URL')
 UMSU_URL = os.getenv('UMSU_HOOK_URL')
-BASE_ID = 'appq8cXX0yFGnGtpE'
-TABLE_ID = 'tbl7HmvrdL6AA6l8k'
+BASE_ID = os.getenv('BASE_ID')
+TABLE_ID = os.getenv('TABLE_ID')
 
 automation = Automation(BASE_ID, TABLE_ID)
 

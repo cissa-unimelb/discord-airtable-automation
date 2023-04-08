@@ -7,10 +7,6 @@ from sqlalchemy import text
 from airtable.utils import collect_fields, prune
 from datetime import datetime
 
-if not IS_PROD:
-    from dotenv import load_dotenv
-    load_dotenv()
-
 TOKEN = os.getenv('ACCESS_TOKEN')
 NAME_FIELD_ID = 'fldndprPs52tyQ35m'
 
