@@ -170,7 +170,7 @@ def attendence_sheet_warning(webhook_id, payloads):
                 print(f'Attendance sheet warning for {record.name} has been sent')
 
 
-@automation.automation(fields=['fldndprPs52tyQ35m', 'fld8OuJdShG0Q4laa', 'fldUKQ4EXpwS7QmYA', 'fldBB5DRsNzvsNb0n', 'fld0amHJcvTUM3q4r'], includes=['fldndprPs52tyQ35m', 'fld8OuJdShG0Q4laa', 'fldUKQ4EXpwS7QmYA', 'fldBB5DRsNzvsNb0n', 'fld0amHJcvTUM3q4r'])
+@automation.automation(fields=['fldndprPs52tyQ35m', 'fld8OuJdShG0Q4laa', 'fldUKQ4EXpwS7QmYA', 'fldBB5DRsNzvsNb0n', 'fld0amHJcvTUM3q4r', 'fld2Sp7IHpZx50zG1'], includes=['fldndprPs52tyQ35m', 'fld8OuJdShG0Q4laa', 'fldUKQ4EXpwS7QmYA', 'fldBB5DRsNzvsNb0n', 'fld0amHJcvTUM3q4r', 'fld2Sp7IHpZx50zG1', 'fldDzpbCxGXXpzGZy'])
 def discord_event(webhook_id, payloads):
     for payload in payloads:
         for record in payload.changed_records:
@@ -179,6 +179,8 @@ def discord_event(webhook_id, payloads):
             end_date = None
             venue = None
             image = None
+            event_type = None
+            date_confirmed = False
 
             for field in record.fields:
                 if field.id == 'fldndprPs52tyQ35m' and field.curr is not None:
@@ -191,13 +193,19 @@ def discord_event(webhook_id, payloads):
                     venue = field.curr
                 elif field.id == 'fld0amHJcvTUM3q4r' and field.curr is not None:
                     image = field.curr
+                elif field.id == 'fld2Sp7IHpZx50zG1' and field.curr is not None:
+                    event_type = field.curr['name']
+                elif field.id == 'fldDzpbCxGXXpzGZy' and field.curr is not None:
+                    date_confirmed = field.curr
 
             if start_date is not None and end_date is not None:
                 end_date = start_date + datetime.timedelta(seconds=int(end_date))
             if image is not None:
                 image = image_to_data_uri(image[0]['url'])
 
-            if start_date is not None and end_date is not None and start_date > datetime.datetime.utcnow() and venue is not None:
+            if start_date is not None and end_date is not None and \
+                    start_date > datetime.datetime.utcnow() and venue is not None and \
+                    date_confirmed and event_type is not None and event_type != "People & Culture":
                 start_date = start_date.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
                 end_date = end_date.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
                 if update_event(record.id, name, None, start_date, end_date, venue, image) is not None:
