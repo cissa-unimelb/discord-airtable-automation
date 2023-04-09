@@ -6,6 +6,8 @@ PROD_MIGRATIONS = False # Set this flag to true when running migrations on prod 
 
 load_dotenv()
 if PROD_MIGRATIONS:
-    engine = create_engine(os.getenv('PROD_DB'))
+    DB_URL = os.getenv('PROD_DB')
 else:
-    engine = create_engine(os.getenv('LOCAL_DB'))
+    DB_URL = os.getenv('DATABASE_URL')
+
+engine = create_engine(DB_URL.replace('postgres://', 'postgresql+psycopg2://', 1))

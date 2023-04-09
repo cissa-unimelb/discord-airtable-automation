@@ -1,5 +1,6 @@
 from automations.types import Automation
 from automations.utils import *
+from discord_api.web_requests import *
 import os
 import datetime
 
@@ -167,3 +168,40 @@ def attendence_sheet_warning(webhook_id, payloads):
                 send_message(UMSU_URL,
                              f'Please upload attendance sheet for **{record.name}**. \n CC: <@1001264127555141642>')
                 print(f'Attendance sheet warning for {record.name} has been sent')
+
+
+@automation.automation(fields=['fldndprPs52tyQ35m', 'fld8OuJdShG0Q4laa', 'fldUKQ4EXpwS7QmYA', 'fldBB5DRsNzvsNb0n', 'fld0amHJcvTUM3q4r'], includes=['fldndprPs52tyQ35m', 'fld8OuJdShG0Q4laa', 'fldUKQ4EXpwS7QmYA', 'fldBB5DRsNzvsNb0n', 'fld0amHJcvTUM3q4r'])
+def discord_event(webhook_id, payloads):
+    for payload in payloads:
+        for record in payload.changed_records:
+            name = None
+            start_date = None
+            end_date = None
+            venue = None
+            image = None
+
+            for field in record.fields:
+                if field.id == 'fldndprPs52tyQ35m' and field.curr is not None:
+                    name = field.curr
+                elif field.id == 'fld8OuJdShG0Q4laa' and field.curr is not None:
+                    start_date = datetime.datetime.strptime(field.curr, '%Y-%m-%dT%H:%M:%S.%fZ')
+                elif field.id == 'fldUKQ4EXpwS7QmYA' and field.curr is not None:
+                    end_date = field.curr
+                elif field.id == 'fldBB5DRsNzvsNb0n' and field.curr is not None:
+                    venue = field.curr
+                elif field.id == 'fld0amHJcvTUM3q4r' and field.curr is not None:
+                    image = field.curr
+
+            if start_date is not None and end_date is not None:
+                end_date = start_date + datetime.timedelta(seconds=int(end_date))
+            if image is not None:
+                image = image_to_data_uri(image[0]['url'])
+
+            if start_date is not None and end_date is not None and start_date > datetime.datetime.utcnow() and venue is not None:
+                start_date = start_date.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+                end_date = end_date.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+                if update_event(record.id, name, None, start_date, end_date, venue, image) is not None:
+                    print(f'{name} discord event has been updated')
+                else:
+                    create_event(record.id, name, None, start_date, end_date, venue, image)
+                    print(f'{name} discord event has been created')

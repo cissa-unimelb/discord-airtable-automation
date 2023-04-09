@@ -6,5 +6,9 @@ from automations.handlers import automation
 import subprocess
 
 automation.create_mapping()
-subprocess.run("python -m gunicorn main:app", shell=True)
+
+if not IS_PROD:
+    subprocess.run("python main.py", shell=True)
+else:
+    subprocess.run("python -m gunicorn main:app", shell=True)
 
