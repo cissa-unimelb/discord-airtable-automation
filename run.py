@@ -6,5 +6,5 @@ from automations.handlers import automation
 import subprocess
 
 automation.create_mapping()
-subprocess.run("python -m gunicorn main:app")
+subprocess.run("python -m gunicorn main:app", shell=True)
 
