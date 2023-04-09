@@ -167,6 +167,3 @@ def attendence_sheet_warning(webhook_id, payloads):
                 send_message(UMSU_URL,
                              f'Please upload attendance sheet for **{record.name}**. \n CC: <@1001264127555141642>')
                 print(f'Attendance sheet warning for {record.name} has been sent')
-
-
-automation.create_mapping()

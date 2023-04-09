@@ -3,7 +3,6 @@ if not IS_PROD:
     from dotenv import load_dotenv
     load_dotenv()
 
-from automations.handlers import *
 from api.controllers import controllers
 from flask import Flask
 import os
