@@ -18,6 +18,7 @@ def hello():
 @controllers.route('/notification', methods=['POST'])
 def notification():
     webhook_id = request.json['webhook']['id']
+    print(f"Received webhook {webhook_id}")
     func_name = None
     with engine.connect() as conn:
         res = conn.execute(text(
@@ -33,6 +34,7 @@ def notification():
     if func_name is None:
         print(f"No webhook mapping exist with webhook {webhook_id}")
     else:
+        print(f"Executing {func_name} with webhook {webhook_id}")
         payloads = list_webhook_payloads(BASE_ID, webhook_id, TABLE_ID)
         exec(f'from automations.handlers import {func_name}\n{func_name}("{webhook_id}", payloads)')
 
