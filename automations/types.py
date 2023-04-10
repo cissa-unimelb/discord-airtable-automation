@@ -42,7 +42,8 @@ class Automation:
             for row in records:
                 if not any(x.func.__name__ == row.func for x in self.automation_list):
                     webhook_to_delete.append((row.webhook_id, row.func))
-                webhook_to_create.remove(next(x for x in self.automation_list if x.func.__name__ == row.func))
+                else:
+                    webhook_to_create.remove(next(x for x in self.automation_list if x.func.__name__ == row.func))
 
             for record in webhook_to_delete:
                 delete_webhook(self.base_id, record[0])
