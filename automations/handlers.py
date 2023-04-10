@@ -170,8 +170,8 @@ def attendence_sheet_warning(webhook_id, payloads):
                 print(f'Attendance sheet warning for {record.name} has been sent')
 
 
-@automation.automation(fields=['fldndprPs52tyQ35m', 'fld8OuJdShG0Q4laa', 'fldUKQ4EXpwS7QmYA', 'fldBB5DRsNzvsNb0n', 'fld0amHJcvTUM3q4r', 'fld2Sp7IHpZx50zG1'], includes=['fldndprPs52tyQ35m', 'fld8OuJdShG0Q4laa', 'fldUKQ4EXpwS7QmYA', 'fldBB5DRsNzvsNb0n', 'fld0amHJcvTUM3q4r', 'fld2Sp7IHpZx50zG1', 'fldDzpbCxGXXpzGZy'])
-def discord_event(webhook_id, payloads):
+@automation.automation(fields=['fldndprPs52tyQ35m', 'fld8OuJdShG0Q4laa', 'fldUKQ4EXpwS7QmYA', 'fldBB5DRsNzvsNb0n', 'fld0amHJcvTUM3q4r', 'fld2Sp7IHpZx50zG1', 'fldDzpbCxGXXpzGZy'], includes=['fldndprPs52tyQ35m', 'fld8OuJdShG0Q4laa', 'fldUKQ4EXpwS7QmYA', 'fldBB5DRsNzvsNb0n', 'fld0amHJcvTUM3q4r', 'fld2Sp7IHpZx50zG1', 'fldDzpbCxGXXpzGZy'])
+def discord_events(webhook_id, payloads):
     for payload in payloads:
         for record in payload.changed_records:
             name = None

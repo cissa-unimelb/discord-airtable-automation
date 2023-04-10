@@ -52,6 +52,7 @@ class Automation:
                     WHERE webhook_id = '{webhook_id}' AND func='{func}'
                     '''.format(webhook_id=record[0], func=record[1])
                 ))
+                print(f"Deleted webhook {record[0]} associated with {record[1]}")
 
             for record in webhook_to_create:
                 res = create_webhook(self.base_id, f'https://{HOST}/notification', self.table_id, fields=record.fields, includes=record.includes)
@@ -62,3 +63,4 @@ class Automation:
                     VALUES(DEFAULT, '{webhook_id}', '{func}')
                     '''.format(webhook_id=id, func=record.func.__name__)
                 ))
+                print(f"Created webhook {id} associated with {record.func.__name__}")
