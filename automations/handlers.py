@@ -48,7 +48,7 @@ def new_event_created(webhook_id, payloads):
             if name and activity_type and week:
                 if has_not_matched(webhook_id, record.id):
                     add_matched(webhook_id, record.id)
-                    send_message(PUB_URL, f'A new record has been added: **{record.name}** ({activity_type_name}) in {week_name} \n CC: <@277373956582014977>')
+                    send_message(PUB_URL, f'A new record has been added: **{record.name}** ({activity_type_name}) in {week_name} \nCC: <@277373956582014977> <@698046487233560586> <@815661488504438785>')
                     print(f'Activity: {record.name} has been made')
 
 
@@ -59,17 +59,18 @@ def update_date(webhook_id, payloads):
             for field in record.fields:
                 if field.id == 'fld8OuJdShG0Q4laa' and field.curr is not None:
                     add_matched(webhook_id, record.id)
-                    send_message(PUB_URL, f'Date for **{record.name}** is now {parse_time(field.curr)}. \n CC: <@277373956582014977>')
+                    send_message(PUB_URL, f'Date for **{record.name}** is now {parse_time(field.curr)}. \nCC: <@277373956582014977> <@698046487233560586> <@815661488504438785>')
                     print(f'The date of {record.name} has been updated to {parse_time(field.curr)}')
 
 
-@automation.automation(fields=['fldESRtthFAGdQhwL'], includes=['fldzkN3GrrQbeC2JI', 'fld4zvgvNx6EjYXGG'])
-def facebook_publicity_warning(webhook_id, payloads):
+@automation.automation(fields=['fldESRtthFAGdQhwL'], includes=['fldzkN3GrrQbeC2JI', 'fld4zvgvNx6EjYXGG', 'fldnHVl2usXCGUxk0'])
+def facebook_publicity_warnings(webhook_id, payloads):
     for payload in payloads:
         for record in payload.changed_records:
             has_fb_link = False
             overdue = False
             pub_ddl = None
+            no_fb_required = False
 
             for field in record.fields:
                 if field.id == 'fldESRtthFAGdQhwL' and field.curr is not None:
@@ -79,8 +80,10 @@ def facebook_publicity_warning(webhook_id, payloads):
                     has_fb_link = True
                 elif field.id == 'fld4zvgvNx6EjYXGG' and field.curr is not None:
                     pub_ddl = field.curr
+                elif field.id == 'fldnHVl2usXCGUxk0' and field.curr is not None:
+                    no_fb_required = True
 
-            if overdue and not has_fb_link:
+            if overdue and not has_fb_link and not no_fb_required:
                 send_message(PUB_URL,
                              f'Please create Facebook event for **{record.name}** by {pub_ddl}. \n CC: <@277373956582014977>')
                 print(f'Facebook publicity warning for {record.name} has been sent')
@@ -124,13 +127,14 @@ def update_graphics_assignee(webhook_id, payloads):
             print(f'Graphics assignee for {record.name} has been updated')
 
 
-@automation.automation(fields=['fldYAhf3IO3lgPYmu'], includes=['fldvfYt7UlFsyprdL', 'fldATjzozdbU5f6KJ'])
-def umsu_grant_warning(webhook_id, payloads):
+@automation.automation(fields=['fldYAhf3IO3lgPYmu'], includes=['fldvfYt7UlFsyprdL', 'fldATjzozdbU5f6KJ', 'fldOIlEMi83OwCKqt'])
+def umsu_grant_warnings(webhook_id, payloads):
     for payload in payloads:
         for record in payload.changed_records:
             has_umsu_grant = False
             overdue = False
             grant_ddl = None
+            no_umsu_required = False
 
             for field in record.fields:
                 if field.id == 'fldvfYt7UlFsyprdL' and field.curr is not None:
@@ -140,8 +144,10 @@ def umsu_grant_warning(webhook_id, payloads):
                         overdue = True
                 elif field.id == 'fldATjzozdbU5f6KJ' and field.curr is not None:
                     grant_ddl = field.curr
+                elif field.id == 'fldOIlEMi83OwCKqt' and field.curr is not None:
+                    no_umsu_required = True
 
-            if overdue and not has_umsu_grant:
+            if overdue and not has_umsu_grant and not no_umsu_required:
                 send_message(UMSU_URL,
                              f'Please apply for UMSU Grant for **{record.name}** before 11.59pm, {grant_ddl}. \n CC: <@561750831448457237>')
                 print(f'UMSU Grant warning for {record.name} has been sent')
