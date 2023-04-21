@@ -48,7 +48,7 @@ def new_event_created(webhook_id, payloads):
             if name and activity_type and week:
                 if has_not_matched(webhook_id, record.id):
                     add_matched(webhook_id, record.id)
-                    send_message(PUB_URL, f'A new record has been added: **{record.name}** ({activity_type_name}) in {week_name} \nCC: <@277373956582014977> <@698046487233560586> <@815661488504438785>')
+                    send_message(PUB_URL, f'A new record has been added: **{record.name}** ({activity_type_name}) in {week_name} \nCC: <@277373956582014977>')
                     print(f'Activity: {record.name} has been made')
 
 
@@ -59,7 +59,7 @@ def update_date(webhook_id, payloads):
             for field in record.fields:
                 if field.id == 'fld8OuJdShG0Q4laa' and field.curr is not None:
                     add_matched(webhook_id, record.id)
-                    send_message(PUB_URL, f'Date for **{record.name}** is now {parse_time(field.curr)}. \nCC: <@277373956582014977> <@698046487233560586> <@815661488504438785>')
+                    send_message(PUB_URL, f'Date for **{record.name}** is now {parse_time(field.curr)}. \nCC: <@277373956582014977>')
                     print(f'The date of {record.name} has been updated to {parse_time(field.curr)}')
 
 
@@ -85,7 +85,7 @@ def facebook_publicity_warnings(webhook_id, payloads):
 
             if overdue and not has_fb_link and not no_fb_required:
                 send_message(PUB_URL,
-                             f'Please create Facebook event for **{record.name}** by {pub_ddl}. \n CC: <@277373956582014977>')
+                             f'Please create Facebook event for **{record.name}** by {pub_ddl}. \nCC: <@277373956582014977> <@698046487233560586> <@815661488504438785>')
                 print(f'Facebook publicity warning for {record.name} has been sent')
 
 
@@ -149,7 +149,7 @@ def umsu_grant_warnings(webhook_id, payloads):
 
             if overdue and not has_umsu_grant and not no_umsu_required:
                 send_message(UMSU_URL,
-                             f'Please apply for UMSU Grant for **{record.name}** before 11.59pm, {grant_ddl}. \n CC: <@561750831448457237>')
+                             f'Please apply for UMSU Grant for **{record.name}** before 11.59pm, {grant_ddl}. \nCC: <@561750831448457237>')
                 print(f'UMSU Grant warning for {record.name} has been sent')
 
 
@@ -172,7 +172,7 @@ def attendence_sheet_warning(webhook_id, payloads):
 
             if overdue and not has_attendance_sheet and event_type['name'] != 'People & Culture':
                 send_message(UMSU_URL,
-                             f'Please upload attendance sheet for **{record.name}**. \n CC: <@1001264127555141642>')
+                             f'Please upload attendance sheet for **{record.name}**. \nCC: <@1001264127555141642>')
                 print(f'Attendance sheet warning for {record.name} has been sent')
 
 
