@@ -22,6 +22,8 @@ blah blah
 1. Perform all database migrations scripts under /migrations. In ```config.py```, toggle "local" flag to true to perform migrations on local database
 2. Execute ```run.py```. This will start up a local flask server and create the appropriate webhooks.
 
+**Warning**: By default, Airtable has a limit of 10 webhooks. This means local development might not be feasible as the number of automation tasks increase, since local development requires a new set of webhooks to be created. If this is the case, developers must develop directly in production environment.
+
 ### Deploying to cloud service
 
 The project is configuered to deploy on Heroku. However, it can also be deployed on alternative cloud hosting providers. Here are a couple key points when deploying on alternative services:
