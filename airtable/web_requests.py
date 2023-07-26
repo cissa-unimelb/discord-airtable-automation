@@ -134,4 +134,7 @@ def delete_webhook(base_id, webhook_id):
     return res.json()
 
 
-
+def refresh_webhook(base_id, webhook_id):
+    url = f'https://api.airtable.com/v0/bases/{base_id}/webhooks/{webhook_id}/refresh'
+    res = requests.post(url, headers={'Authorization': f'Bearer {TOKEN}'})
+    return res.json()
