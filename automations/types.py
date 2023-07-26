@@ -1,9 +1,11 @@
 from dataclasses import dataclass
 from typing import Callable
-from airtable.web_requests import create_webhook, delete_webhook
+from airtable.web_requests import create_webhook, delete_webhook, list_webhooks, refresh_webhook
 from database import engine
 from sqlalchemy import text
 import os
+import threading
+import datetime
 
 HOST = os.getenv('HOST')
 
@@ -20,6 +22,18 @@ class Automation:
         self.base_id = base_id
         self.table_id = table_id
         self.automation_list = []
+        self.last_refreshed = None
+        # Background thread that periodically refreshes all webhooks
+        t = threading.Thread(target=self.refresh_webhooks)
+        t.start()
+
+    def refresh_webhooks(self):
+        while True:
+            if self.last_refreshed is None or datetime.datetime.utcnow() - self.last_refreshed > datetime.timedelta(days=3):
+                self.last_refreshed = datetime.datetime.utcnow()
+                for webhook in list_webhooks(self.base_id):
+                    refresh_webhook(self.base_id, webhook.id)
+                    print(f"Refreshed webhook {webhook.id}")
 
     def automation(self, fields=None, includes=None):
         def decorator(f):
