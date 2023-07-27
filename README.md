@@ -45,4 +45,11 @@ All tasks are located in ```/automation/handlers.py```.
 
 ### Adding tasks
 
+Each automation task is represented via a function of type ```(webhook_id: str, payloads: [WebhookPayload]) -> None```.  The function can be thought of as a "handler" for when an automation triggers, it performs certain actions in response to the automation being triggered, receiving a list of ```WebhookPayload``` (data in a record).
 
+In order to register an automation, use the ```Automation.automation(fields: [str], includes: [str])``` decorator. The decorator controls which fields the automation "watches" (the automation triggers if a watched field's data of a given record changes), and which auxiliary fields to include (these field data will always be included regardless if they are changed).
+- ```fields``` : List of field IDs that the automation watches. For any record, if the data in any of the watched fields changes, the automation gets triggered.
+- ```includes```: List of field IDs that the automation includes. Every time the automation runs, the data in these fields will always be included alongside.
+
+Examples of existing automations can be found in ```/automation/handlers.py```. All automations must be declared in the same file (attempts to declare automations in other files will likely result in circular imports due to the way files are imported in this project).
+	
