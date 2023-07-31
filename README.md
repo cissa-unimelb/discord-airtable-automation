@@ -15,7 +15,7 @@ Airtable integration for discord. Allows automated tasks to run based on airtabl
 
 #### .env file
 
-blah blah
+TODO
 
 #### Running for the first time
 
@@ -26,13 +26,13 @@ blah blah
 
 ### Deploying to cloud service
 
-The project is configuered to deploy on Heroku. However, it can also be deployed on alternative cloud hosting providers. Here are a couple key points when deploying on alternative services:
+The project is configured to deploy on Heroku. However, it can also be deployed on alternative cloud hosting providers. Here are a couple key points when deploying on alternative services:
 
 - Environment must run a Linux-based OS (preferably Ubuntu, as Ubuntu has been tested to be compatible)
 - Ensure the environment contains Python >= 3.7
 - Install all libraries in ```requirements.txt```
 - Ensure the environment allows incoming (and outgoing) HTTP/S requests
-- Ensure the environment allows configuration of enviornment variables (do not use .env files in production environment)
+- Ensure the environment allows configuration of environment variables (do not use .env files in production environment)
 - Configure the environment to execute ```run.py``` on start up
 
 There also need to have a separate, production-ready instance of a PostgreSQL database set up and running.
@@ -52,4 +52,13 @@ In order to register an automation, use the ```Automation.automation(fields: [st
 - ```includes```: List of field IDs that the automation includes. Every time the automation runs, the data in these fields will always be included alongside.
 
 Examples of existing automations can be found in ```/automation/handlers.py```. All automations must be declared in the same file (attempts to declare automations in other files will likely result in circular imports due to the way files are imported in this project).
-	
+
+### Modifying tasks
+
+Existing automations can be modified directly by editing the content of its function, without modifying anything else.
+
+If any of the watched/included fields needs to be changed (e.g automation needs to watch additional fields), the airtable wehbhook needs to be rebuilt. In order to do that, the **function name needs to be changed and it must be unique**. The service maps airtable webhooks to python functions via its name, so it'll treat any functions with a new name as a new webhook. 
+
+### Deleting tasks
+
+Tasks can be deleted by simply deleting its respective python function. 
