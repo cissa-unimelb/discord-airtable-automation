@@ -1,3 +1,4 @@
+
 # discord-airtable-automation
 
 Airtable integration for discord. Allows automated tasks to run based on airtable events (e.g record creation).
@@ -15,7 +16,16 @@ Airtable integration for discord. Allows automated tasks to run based on airtabl
 
 #### .env file
 
-TODO
+- ACCESS_TOKEN: Airtable API token
+- BASE_ID: Airtable base ID
+- DATABASE_URL: PostgreSQL DB URL
+- DISCORD_GUILD_ID: Discord server guild ID
+- DISCORD_TOKEN: Discord bot access token
+- HOST: Host of server (The host of https://www.example.com is example.com)
+- PROD: Is the application running in production (False if running locally)
+- PUBLICITY_HOOK_URL: Discord webhook URL for publicity notification channel
+- TABLE_ID: Airtable table ID
+- UMSU_HOOK_URL: Discord webhook URL for for umsu notification channel
 
 #### Running for the first time
 
@@ -62,3 +72,63 @@ If any of the watched/included fields needs to be changed (e.g automation needs 
 ### Deleting tasks
 
 Tasks can be deleted by simply deleting its respective python function. 
+
+## For Maintainers
+
+This section will detail how to maintain the project and a low level overview of how the project functions. Read this section if you intend on maintaining the project long term.
+
+### Airtable (/airtable)
+
+Contains functionalities related to the airtable API. Functions/classes in this folder are primarily responsible for interacting with the airtable API and parsing data returned from the API. These are likely to remain unchanged unless there is a change in the airtable API itself.
+
+#### `types.py`
+
+Contains data types for the airtable API. Most of the types can be mapped 1 to 1 to the API's return types. 
+
+#### `utils.py`
+
+Contains miscellaneous functions that modifies airtable data types. 
+
+#### `web_requests.py`
+
+Contains functions that calls airtable's web API and parsing return values into appropriate data types.
+
+### API (/api)
+
+Contains functionalities related to the HTTP API of the automation.
+
+#### `controllers.py`
+
+Contains HTTP endpoints of the API. Also acts as handlers for airtable webhooks.
+
+### Automations (/automations)
+
+Contains bulk of the business logic of the application. Most of the functionalities pertaining to the actions executed in automations, registering/de-registering automations are in this folder.
+
+#### `handlers.py`
+
+See **For Developers** section for more details. Contains all task handlers for each airtable automation.
+
+#### `types.py`
+
+Contains the main `Automation` class, which is responsible for registering and de-registering airtable webhooks, and linking airtable webhooks to its respective automation handler. 
+
+#### `utils.py`
+
+Contains helper functions for automation task handlers.
+
+### Discord API (/discord_api)
+
+Contains functionalities related to the discord web API.
+
+#### `types.py`
+
+Contains data types for the discord API.
+
+#### `web_requests.py`
+
+Contains function that calls the discord web API and parses return data into its respective data types.
+
+### Migrations (/migrations)
+
+Contains database migrations that create/modify/delete tables on the database.
