@@ -18,7 +18,7 @@ DISCORD_MAPPINGS = {
     "Vidhya Kudikyala": "690380645830230016",
     "Kasie Wang": "827474078386225152",
     "Florence Tang": "737253087680528384",
-    "Gunjan Ahluwalia": "1074325276487589979",
+    "Gunjan Ahluwalia Ahluwalia": "1074325276487589979",
     "Elysia Lelon": "755747243167842365"
 }
 
