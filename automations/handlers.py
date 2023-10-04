@@ -85,7 +85,7 @@ def facebook_publicity_warnings(webhook_id, payloads):
 
             if overdue and not has_fb_link and not no_fb_required:
                 send_message(PUB_URL,
-                             f'Please create Facebook event for **{record.name}** by {pub_ddl}. \nCC: <@698046487233560586> <@815661488504438785>')
+                             f'Please create Facebook event for **{record.name}** by {pub_ddl}. \nCC: <@698046487233560586>')
                 print(f'Facebook publicity warning for {record.name} has been sent')
 
 
