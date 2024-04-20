@@ -10,16 +10,27 @@ BASE_ID = os.getenv('BASE_ID')
 TABLE_ID = os.getenv('TABLE_ID')
 # TODO: Find a better way to automate airtable->discord mappings
 DISCORD_MAPPINGS = {
-    "Catherine Muir": "274879451689517056",
-    "Harry Chen": "425974501600395265",
-    "Ivan Zhuang": "277373956582014977",
-    "Rebecca Hwang": "481421416902819848",
-    "Stella Li": "255956057774358528",
+    # Newsletter officer
+    "Delia Zhou": "649597957993398277",
+
+    # Creative content officer
+    "Zita Lam": "781782653148987454",
+
+    # Design officers
+    "Amy Nguyen": "464366290195447828",
+    "Lihini Gamage": "504697814190784532",
+    "Megane Boucherat": "766532985797083137",
     "Vidhya Kudikyala": "690380645830230016",
+    "Hyun-jin Park": "379580395844534273",
+
+    # Execs and directors
     "Kasie Wang": "827474078386225152",
-    "Florence Tang": "737253087680528384",
-    "Gunjan Ahluwalia Ahluwalia": "1074325276487589979",
-    "Elysia Lelon": "755747243167842365"
+    "Sean Khoo": "231371639638458368",
+    "Margaret Xu": "718760476343009332",
+    # "Aarushi Dua": "698046487233560586",
+
+    # IT officers
+    "Michael Ren": "1138969490432991232",
 }
 
 automation = Automation(BASE_ID, TABLE_ID)
