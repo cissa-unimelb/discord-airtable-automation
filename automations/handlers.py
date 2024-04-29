@@ -24,6 +24,7 @@ DISCORD_MAPPINGS = {
     "Hyun-jin Park": "379580395844534273",
 
     # Execs and directors
+    "Cinque Howells": "414387716495769604",
     "Kasie Wang": "827474078386225152",
     "Sean Khoo": "231371639638458368",
     "Margaret Xu": "718760476343009332",
@@ -59,7 +60,7 @@ def new_event_created(webhook_id, payloads):
             if name and activity_type and week:
                 if has_not_matched(webhook_id, record.id):
                     add_matched(webhook_id, record.id)
-                    send_message(PUB_URL, f'A new record has been added: **{record.name}** ({activity_type_name}) in {week_name} \nCC: <@698046487233560586>')
+                    send_message(PUB_URL, f'A new record has been added: **{record.name}** ({activity_type_name}) in {week_name} \nCC: <@698046487233560586> <@414387716495769604> <@827474078386225152>')
                     print(f'Activity: {record.name} has been made')
 
 
