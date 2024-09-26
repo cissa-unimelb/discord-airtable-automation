@@ -60,7 +60,7 @@ def new_event_created(webhook_id, payloads):
             if name and activity_type and week:
                 if has_not_matched(webhook_id, record.id):
                     add_matched(webhook_id, record.id)
-                    send_message(PUB_URL, f'A new record has been added: **{record.name}** ({activity_type_name}) in {week_name} \nCC: <@698046487233560586> <@414387716495769604> <@827474078386225152>')
+                    send_message(PUB_URL, f'A new record has been added: **{record.name}** ({activity_type_name}) in {week_name} \nCC: <@508491361452818439> <@464366290195447828> <@241131716767514625> <@644467035471872000>')
                     print(f'Activity: {record.name} has been made')
 
 
@@ -97,7 +97,7 @@ def facebook_publicity_warnings(webhook_id, payloads):
 
             if overdue and not has_fb_link and not no_fb_required:
                 send_message(PUB_URL,
-                             f'Please create Facebook event for **{record.name}** by {pub_ddl}. \nCC: <@508491361452818439>')
+                             f'Please create Facebook event for **{record.name}** by {pub_ddl}. \nCC: <@508491361452818439> <464366290195447828>')
                 print(f'Facebook publicity warning for {record.name} has been sent')
 
 
