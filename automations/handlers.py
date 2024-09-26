@@ -97,7 +97,7 @@ def facebook_publicity_warnings(webhook_id, payloads):
 
             if overdue and not has_fb_link and not no_fb_required:
                 send_message(PUB_URL,
-                             f'Please create Facebook event for **{record.name}** by {pub_ddl}. \nCC: <@698046487233560586>')
+                             f'Please create Facebook event for **{record.name}** by {pub_ddl}. \nCC: <@508491361452818439>')
                 print(f'Facebook publicity warning for {record.name} has been sent')
 
 
@@ -161,7 +161,7 @@ def umsu_grant_warnings(webhook_id, payloads):
 
             if overdue and not has_umsu_grant and not no_umsu_required:
                 send_message(UMSU_URL,
-                             f'Please apply for UMSU Grant for **{record.name}** before 11.59pm, {grant_ddl}. \nCC: <@998269811584938005>')
+                             f'Please apply for UMSU Grant for **{record.name}** before 11.59pm, {grant_ddl}. \nCC: <@386139434396942339>')
                 print(f'UMSU Grant warning for {record.name} has been sent')
 
 
@@ -184,7 +184,7 @@ def attendence_sheet_warning(webhook_id, payloads):
 
             if overdue and not has_attendance_sheet and event_type['name'] != 'People & Culture':
                 send_message(UMSU_URL,
-                             f'Please upload attendance sheet for **{record.name}**. \nCC: <@198255674818297856>')
+                             f'Please upload attendance sheet for **{record.name}**. \nCC: <@479197473366081548>')
                 print(f'Attendance sheet warning for {record.name} has been sent')
 
 
