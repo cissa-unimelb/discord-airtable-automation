@@ -71,7 +71,7 @@ def update_date(webhook_id, payloads):
             for field in record.fields:
                 if field.id == 'fld8OuJdShG0Q4laa' and field.curr is not None:
                     add_matched(webhook_id, record.id)
-                    send_message(PUB_URL, f'Date for **{record.name}** is now {parse_time(field.curr)}. \nCC: <@698046487233560586>')
+                    send_message(PUB_URL, f'Date for **{record.name}** is now {parse_time(field.curr)}. \nCC: <@508491361452818439> <@464366290195447828>')
                     print(f'The date of {record.name} has been updated to {parse_time(field.curr)}')
 
 
